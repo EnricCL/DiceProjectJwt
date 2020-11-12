@@ -13,7 +13,7 @@ public interface IPlayerService {
 	public List<Player> showAllPlayers();
 	
 	//POST
-	public Player saveNewPlayer(String player);
+	public Player saveNewPlayer(String name, String password);
 	
 	//PUT
 	public Player editPlayer(Player player);

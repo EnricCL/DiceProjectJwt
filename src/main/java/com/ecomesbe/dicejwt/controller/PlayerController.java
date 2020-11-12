@@ -1,10 +1,5 @@
 package com.ecomesbe.dicejwt.controller;
 
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_HEADER;
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_ISSUER;
-import static com.ecomesbe.dicejwt.security.Constants.SECRET_KEY;
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_PREFIX;
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_EXPIRATION_TIME;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -33,45 +28,33 @@ public class PlayerController {
 	@Autowired
 	PlayerServiceImpl playerService;
 	
-	//POST: /players : crear un jugador	(sempre generará la contrasenya 'password' per fer prova amb jwt)
+	//POST: /players : crear un jugador	(sempre generarà la contrasenya 'password' per fer prova amb jwt)
 	@PostMapping("/players")
 	public ResponseEntity<Object> createNewPlayer(@RequestBody HashMap<String, String> newPlayer){
-		if(newPlayer.containsKey("name")) {
-			return ResponseEntity.ok().body(playerService.saveNewPlayer(newPlayer.get("name")));
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data no accepted");
-		}
-	}
-	
-	//POST /players/login : fa login per obtenir JWT
-	@PostMapping("/players/login")
-	public ResponseEntity<Object> loginPlayer(@RequestBody HashMap<String, String> loginPlayer){
-		if(loginPlayer.containsKey("name")) {
-			if(loginPlayer.containsKey("password")) {
-				
-				Player playerLogin = new Player(loginPlayer.get("name").toString(), loginPlayer.get("password").toString());
-				
-				//Generated Token
-				String token = getToken(playerLogin.getName());
-				
-				return ResponseEntity.ok().body(token);
+		try {
+			if(newPlayer.containsKey("name")) {
+				return ResponseEntity.ok().body(playerService.saveNewPlayer(newPlayer.get("name"),newPlayer.get("password")));
 			}else {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data no accepted");
 			}
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data no accepted");
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-	
+		
 	//PUT /players : modifica el nom del jugador
 	@PutMapping("/players")
 	public ResponseEntity<Object> editPlayer(@RequestBody HashMap<String, String> modPlayer){
-		if(modPlayer.containsKey("name")) {
-			return ResponseEntity.ok().body(playerService.editPlayer(modPlayer.get("name"),
-																	Long.parseLong(modPlayer.get("id"))
-																	));
-		}else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data no accepted");
+		try {
+			if(modPlayer.containsKey("name")) {
+				return ResponseEntity.ok().body(playerService.editPlayer(modPlayer.get("name"),
+																		Long.parseLong(modPlayer.get("id"))
+																		));
+			}else {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data no accepted");
+			}
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
 		
@@ -97,20 +80,6 @@ public class PlayerController {
 	@GetMapping("/players/ranking/winner")
 	public ResponseEntity<Object> showWinner(){
 		return ResponseEntity.ok().body(playerService.getWinner());
-	}
-	
-	//JWT Method
-    String getToken(String username) {    
-    	
-		String token = Jwts
-				.builder()
-				.setIssuedAt(new Date()).setIssuer(TOKEN_ISSUER)
-				.setSubject(username)		
-				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.HS512,
-						SECRET_KEY).compact();
-
-		return "Bearer " + token;
-	}    
+	} 
        
 }

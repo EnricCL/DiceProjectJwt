@@ -1,8 +1,8 @@
 package com.ecomesbe.dicejwt.security;
 
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_HEADER;
+import static com.ecomesbe.dicejwt.security.Constants.HEADER_AUTHORIZACION_KEY;
 import static com.ecomesbe.dicejwt.security.Constants.SECRET_KEY;
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_PREFIX;
+import static com.ecomesbe.dicejwt.security.Constants.TOKEN_BEARER_PREFIX;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
 									HttpServletResponse response,
 									FilterChain chain)
 					throws IOException, ServletException {
-		String header = request.getHeader(TOKEN_HEADER);
-		if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+		String header = request.getHeader(HEADER_AUTHORIZACION_KEY);
+		if (header == null || !header.startsWith(TOKEN_BEARER_PREFIX)) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -42,12 +42,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
 	}
 	
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-		String token = request.getHeader(TOKEN_HEADER);
+		String token = request.getHeader(HEADER_AUTHORIZACION_KEY);
 		if (token != null) {
 			// Se procesa el token y se recupera el usuario.
 			String user = Jwts.parser()
 						.setSigningKey(SECRET_KEY)
-						.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+						.parseClaimsJws(token.replace(TOKEN_BEARER_PREFIX, ""))
 						.getBody()
 						.getSubject();
 

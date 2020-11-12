@@ -1,0 +1,544 @@
+{
+	"info": {
+		"_postman_id": "731e1acc-eb61-4dae-b649-c118e87067c7",
+		"name": "DiceProjectJwt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/dicegame/players/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"John\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						""
+					]
+				},
+				"description": "POST create player without password, the response is a exception with a message and error 400 bad request"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/2/games",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxMzU3OTUsImlzcyI6ImVucmljIiwic3ViIjoiQm9uZGlhIiwiZXhwIjoxNjA1OTgxNzk1fQ.6or16YtJNJ3oACELZ5lYaIk5bbJ8HoeoYTCLjamvQLKh_a8VTo6wnT5ta9Fb_uTJ_tVyuSeMSlg9PaQBiFMQzA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/2/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						"2",
+						"games"
+					]
+				},
+				"description": "POST a play game for a player not created, return a error 406 not acceptable with a message response"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						""
+					]
+				},
+				"description": "GET list of players without a Bearer, return a error 403 with a json response with information"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"John\",\r\n    \"password\":\"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						""
+					]
+				},
+				"description": "Create a player with name and password, return a json with information of this player created and status 200"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"John\",\r\n    \"password\":\"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				},
+				"description": "Login the player created, return a status 200 and Header with Bearer"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						""
+					]
+				},
+				"description": "Get a list players with the Bearer generated, return a list of players and status 200"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/1/games",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/1/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						"1",
+						"games"
+					]
+				},
+				"description": "Play a game with a player created and the Bearer in Header, return a status 200 with a message response (the 2 dices results and success true or false)"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/2/games",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/2/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						"2",
+						"games"
+					]
+				},
+				"description": "Play other game, but the id not exist, return a error 406 not acceptable and the message response say \"this id not exist\""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Max\",\r\n    \"password\": \"abc\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						""
+					]
+				},
+				"description": "Created a second player"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Sara\",\r\n    \"password\": \"xyz\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						""
+					]
+				},
+				"description": "Created a third player"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/2/games",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/2/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						"2",
+						"games"
+					]
+				},
+				"description": "Play 3 games with the player id 2, return status 200 and information of the plays"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/3/games",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/3/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						"3",
+						"games"
+					]
+				},
+				"description": "Play games for player id 3"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						""
+					]
+				},
+				"description": "Get a list players, the response is ok and the response are the 3 players created with diferents success %"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/ranking",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/ranking/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						"ranking",
+						""
+					]
+				},
+				"description": "Get raking of all players createds, return a ranking % of the all players with status 200 ok"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/ranking/winner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/ranking/winner",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						"ranking",
+						"winner"
+					]
+				},
+				"description": "get ranking of winner"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/ranking/loser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MDUxNzE2MjIsImlzcyI6ImVucmljIiwic3ViIjoiSm9obiIsImV4cCI6MTYwNjAxNzYyMn0.dSBGVP9caECULBa8q7LXqNCqDg1O2QMBVPyjIDtx8nPSRR3qPboTDX5EqorpUcVr6gQDVl3laE87GsFdex0Y6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/ranking/loser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						"ranking",
+						"loser"
+					]
+				},
+				"description": "Get a ranking the most loser player"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/dicegame/players/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"player3\",\r\n    \"password\":\"player4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/dicegame/players/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"dicegame",
+						"players",
+						""
+					]
+				},
+				"description": "Create a player that already exists with the same name, returns a 400 bad request error and a message informing"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

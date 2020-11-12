@@ -1,7 +1,7 @@
 package com.ecomesbe.dicejwt.dto;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,11 +33,11 @@ public class Player {
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
 	List<Game> games = new ArrayList<>();
-	
+		
 	@Column(name="date")
-	private LocalDate date = LocalDate.now();
+	@Temporal(TemporalType.TIMESTAMP)
+	Date date = new Date(System.currentTimeMillis());
 	
-	//@JsonIgnore
 	@Column(name="success")
 	private float success;
 	
@@ -51,14 +53,14 @@ public class Player {
 	@Column(name="game_total")
 	private int gameTotal;
 	
-	@JsonIgnore
+	
 	@Column(name="password")
 	private String password;
 	
 	public Player() {
 	}
 
-	public Player(Long id, String name, List<Game> games, LocalDate date, float success) {
+	public Player(Long id, String name, List<Game> games, Date date, float success) {
 		this.id = id;
 		this.name = name;
 		this.games = games;
@@ -66,7 +68,7 @@ public class Player {
 		this.success = success;
 	}
 
-	public Player(Long id, String name, List<Game> games, LocalDate date) {
+	public Player(Long id, String name, List<Game> games, Date date) {
 		this.id = id;
 		this.name = name;
 		this.games = games;
@@ -107,11 +109,11 @@ public class Player {
 		this.games = games;
 	}
 
-	public LocalDate getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

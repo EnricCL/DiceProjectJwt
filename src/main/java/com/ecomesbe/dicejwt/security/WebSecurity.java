@@ -1,5 +1,7 @@
 package com.ecomesbe.dicejwt.security;
 
+import static com.ecomesbe.dicejwt.security.Constants.LOGIN_URL;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,12 +25,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	public WebSecurity(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
 	}
-	/*
+	
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	*/
+	
 	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -36,7 +38,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.cors().and().csrf().disable()
 		.authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/dicegame/players/login/").permitAll()
+		.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
 		.antMatchers(HttpMethod.POST, "/dicegame/players/").permitAll()
 		.anyRequest().authenticated().and()
 			.addFilter(new JWTAuthenticationFilter(authenticationManager()))
@@ -45,8 +47,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
-		//auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+		//auth.userDetailsService(userDetailsService);
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 
 	}
 

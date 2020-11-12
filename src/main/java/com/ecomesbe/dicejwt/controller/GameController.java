@@ -28,7 +28,7 @@ public class GameController {
 		try {
 			return ResponseEntity.ok().body(gameService.newGame(player));
 		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getCause());
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class GameController {
 			gameService.deleteAllGamesByPlayer(player);
 			return ResponseEntity.ok().build();			
 		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getCause());
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
 		}
 	}
 	

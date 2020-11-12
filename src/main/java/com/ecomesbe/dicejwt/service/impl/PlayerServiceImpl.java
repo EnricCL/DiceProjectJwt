@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ecomesbe.dicejwt.dao.IPlayerDAO;
@@ -21,6 +22,8 @@ public class PlayerServiceImpl implements IPlayerService{
 	@Autowired
 	private PlayerServiceImpl playerService;
 	
+	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+	
 	//GET all players
 	@Override
 	public List<Player> showAllPlayers(){
@@ -34,9 +37,9 @@ public class PlayerServiceImpl implements IPlayerService{
 	}
 	//POST save new player
 	//@Override
-	public Player saveNewPlayer(String name) {
+	public Player saveNewPlayer(String name, String password) {
 		
-		Player player = new Player(name);
+		Player player = new Player(name, password);
 		
 		if(name=="") {
 			player.setName("ANÒNIM");
@@ -55,7 +58,7 @@ public class PlayerServiceImpl implements IPlayerService{
 			}
 			if(total == allPlayers.size()) {
 				player.setName(name);
-				player.setPassword("password"); //All users with password = password (for jwt test)
+				player.setPassword(bCryptPasswordEncoder.encode(password));
 			}
 		}
 		
@@ -144,7 +147,7 @@ public class PlayerServiceImpl implements IPlayerService{
 					playerMostLoser = playerFor;
 					first = false;
 				}else {
-					if(playerMostLoser.getSuccess() < playerFor.getSuccess()) {
+					if(playerMostLoser.getSuccess() > playerFor.getSuccess()) {
 						playerMostLoser = playerFor;
 					}
 				}

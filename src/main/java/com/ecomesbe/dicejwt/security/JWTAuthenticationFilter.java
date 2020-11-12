@@ -1,9 +1,9 @@
 package com.ecomesbe.dicejwt.security;
 
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_HEADER;
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_ISSUER;
+import static com.ecomesbe.dicejwt.security.Constants.HEADER_AUTHORIZACION_KEY;
+import static com.ecomesbe.dicejwt.security.Constants.ISSUER_INFO;
 import static com.ecomesbe.dicejwt.security.Constants.SECRET_KEY;
-import static com.ecomesbe.dicejwt.security.Constants.TOKEN_PREFIX;
+import static com.ecomesbe.dicejwt.security.Constants.TOKEN_BEARER_PREFIX;
 import static com.ecomesbe.dicejwt.security.Constants.TOKEN_EXPIRATION_TIME;
 
 import java.io.IOException;
@@ -42,7 +42,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 						throws AuthenticationException{
 		try {
 			Player credentials = new ObjectMapper().readValue(request.getInputStream(), Player.class);
-			
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					credentials.getName(), credentials.getPassword(), new ArrayList<>()));
 		}catch(IOException e) {
@@ -54,11 +53,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 
-		String token = Jwts.builder().setIssuedAt(new Date()).setIssuer(TOKEN_ISSUER)
+		String token = Jwts.builder().setIssuedAt(new Date()).setIssuer(ISSUER_INFO)
 				.setSubject(((User)auth.getPrincipal()).getUsername())
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
-		response.addHeader(TOKEN_HEADER, TOKEN_PREFIX + " " + token);
+		response.addHeader(HEADER_AUTHORIZACION_KEY, TOKEN_BEARER_PREFIX + " " + token);
 	}
 
 	
